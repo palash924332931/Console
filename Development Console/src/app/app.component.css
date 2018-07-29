@@ -1,0 +1,9 @@
+.no-margin-padding {
+    margin: 0px;
+    padding: 0px;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+}

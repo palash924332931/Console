@@ -1,0 +1,59 @@
+<div class="home-tab-content">
+    <div style="width:100%">
+        <div class="padding-zero mgs-left-side active-wearbols-content-left" style="width:25%;float:left">
+            <div style="align-content: center" class="active-wearbols-title"><b> Wearbol Users</b></div>
+            <div class="col-sm-12 padding-zero wearbols-groups">
+                <div class="panel-group" id="accordionMenu" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default active-user-info-list">
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <!-- <div class="panel-body">
+                                <ul class="nav">
+                                    <li *ngFor="let user of activeWeabols;let count=index" class="child-node" [ngClass]="{'user-list-event':count%2==0, 'user-list-odd':count%2==1,'active-user':selectedUser==user.UserName}">
+                                        <a>
+                                            <span class="" style="padding-right: 10px"><input type="checkbox" name="active-user-checkbox" class="active-user-checkbox" [checked]="selectedUser==user.UserName" (click)="fnSelectUser(user,$event)"></span>                                            {{user.UserName}}
+                                            <span class="pull-right"><i class="fa fa-check-circle" style="font-size:15px;" [style.color]="user.OnlineStatus=='online'?'green':'#ccc'"></i></span>
+                                        </a>
+
+                                    </li>
+                                </ul>
+                            </div> -->
+
+                            <div class="panel-body">
+                                <div *ngFor="let userGroup of wearbolUserWithGroup">
+                                    <div class="group-header" (click)="fnAccordionActivity(userGroup.GroupName)">{{userGroup.GroupName}}
+                                        <span *ngIf="selectedGroupName!=userGroup.GroupName" class="glyphicon glyphicon-chevron-up pull-right" style="padding-right:10px"></span>
+                                        <span *ngIf="selectedGroupName==userGroup.GroupName" class="glyphicon glyphicon-chevron-down pull-right" style="padding-right:10px"></span>
+                                    </div>
+                                    <ul class="nav" [ngClass]="{'open-user-list':selectedGroupName==userGroup.GroupName, 'close-user-list':selectedGroupName!=userGroup.GroupName}">
+                                        <li *ngFor="let user of userGroup.UserList;let count=index" class="child-node" [ngClass]="{'user-list-event':count%2==0, 'user-list-odd':count%2==1,'active-user':selectedUser==user.UserName}">
+                                            <a>
+                                                <span class="" style="padding-right: 10px"><input type="checkbox" name="active-user-checkbox" class="active-user-checkbox" [checked]="selectedUser==user.UserName" (click)="fnSelectUser(user,$event)"></span>                                                {{user.UserName}}
+                                                <span class="pull-right"><i class="fa fa-check-circle" style="font-size:15px;" [style.color]="user.OnlineStatus=='online'?'green':'#ccc'"></i></span>
+                                            </a>
+
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="mgs-right-side user-content-right" style="width:75%;float:right">
+            <div class="col-sm-12" *ngIf="selectedUser!='all user'">
+                <label class="btn btn-default">
+                     <input type="radio" id="q156" class="history-filter" name="radioMessageType" value="sendByFilter" (click)="fnFilterApply('sendByFilter',$event)"  />  <b>Sent by {{selectedUser}}</b>
+                </label>
+                <label class="btn btn-default">
+                     <input type="radio" id="q156" class="history-filter" name="radioMessageType" value="sendToFilter"  (click)="fnFilterApply('sendToFilter',$event)"  />  <b>Sent to {{selectedUser}}</b>
+                </label>
+                <label class="btn btn-default">
+                    <input type="radio" id="q156" class="history-filter" name="radioMessageType" value="bothFilter"  (click)="fnFilterApply('bothFilter',$event)"  />  <b>Either</b>
+                </label>
+            </div>
+            <app-p-table [pTableSetting]="messageHistoryTableBind" [pTableMasterData]="messageHistory" (customReflowFn)="fnCustomReflowSetting($event)"></app-p-table>
+        </div>
+
+    </div>

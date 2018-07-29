@@ -1,0 +1,30 @@
+.mgs-left-side {
+    border-right: thick double green;
+    min-height: 500px;
+}
+
+.mgs-right-side {
+    border-left: thick double #ff0000;
+    min-height: 500px;
+}
+
+.padding-zero {
+    padding: 0px;
+}
+
+.group-dropdown{
+    width: 100%;
+}
+.group-dropdown .dropdown-menu {
+    width: 100%; 
+}
+  
+.group-dropdown .btn{
+    width: 100%;
+    text-align: left;
+}
+
+.group-dropdown li{
+    cursor: pointer;
+}
+

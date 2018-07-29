@@ -1,0 +1,90 @@
+<div class="col-sm-12 home-tab-content">
+    <alert></alert>
+    <div class="col-sm-3 active-wearbols-content-left">
+        <div style="align-content: center" class="active-wearbols-title"><b> Wearbol Users</b></div>
+        <div class="col-sm-12 padding-zero wearbols-groups">
+            <div class="panel-group" id="accordionMenu" role="tablist" aria-multiselectable="true">
+                <div class="panel-group" id="accordionMenu" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default active-user-info-list">
+                        <div class="panel-heading group-header" role="tab" id="headingOne">
+                            <span class="" style="float:left;padding-right: 10px"><input type="checkbox" (click)="fnSelectUser('all-user','',$event)"></span>
+                            <span style="float:left"> <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordionMenu"  aria-expanded="true" aria-controls="collapseOne">
+                                    <b> All</b>
+                                </a>
+                            </h4>
+                        </span >
+                            <span style="align-content:center" style="float:right"><i class="fa fa-chevron-up pull-right align-center" aria-hidden="true"></i></span>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <ul class="nav">
+                                    <li *ngFor="let user of activeWeabolsUser;let count=index" class="child-node" [ngClass]="{'user-list-event':count%2==0, 'user-list-odd':count%2==1,'active-user':user.Selected}">
+                                        <a>
+                                            <span class="" style="padding-right: 10px"><input type="checkbox" name="active-user-checkbox" class="active-user-checkbox" [(ngModel)]="user.Selected" ></span> {{user.UserName}}
+                                            <span class="pull-right"><i class="fa fa-check-circle" style="font-size:15px;" [style.color]="user.OnlineStatus=='online'?'green':'#ccc'"></i></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-sm-6 user-content-right">
+        <div class="panel panel-info">
+            <div class="panel-heading"><b>Message Information</b></div>
+            <div class="panel-body">
+                <div class="col-sm-12">
+                    <div class="col-sm-3">
+                        <table class="message-sending-table">
+                            <thead>
+                                <th colspan="2"></th>
+                            </thead>
+                            <tr *ngIf="false">
+                                <td><b>Select Message Type</b></td>
+                                <td><input type="radio" name="message" #customMessage (click)="fnSelectMessageType('custom-message',$event)"> Custom Message <br/><input type="radio" name="message" #templateMessage (click)="fnSelectMessageType('template',$event)">                                    Template Message </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td> </td>
+                            </tr>
+                            <tr *ngIf="templateMessageEnabled">
+                                <td colspan="2">
+                                    <select class="form-control selcls" id="templateMessageSelect">
+                                        <option *ngFor="let message of templateMessageArray" value="{{message.MsgText}}">{{message.MsgText}}</option>
+                               </select></td>
+                            </tr>
+                            <tr *ngIf="customMessageEnabled">
+                                <td colspan="2"> <textarea class="form-control" id="messageContent" name="" cols="40" rows="8" placeholder="Your message here"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td *ngIf="templateMessageEnabled || customMessageEnabled">
+                                    <button type="button" class="btn btn-info" value="Send" (click)="fnSendMessage()">Send</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-sm-3">
+                        <div>
+
+                        </div>
+                        <div>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-3"></div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <app-live-feed></app-live-feed>
+    </div>
+
+</div>

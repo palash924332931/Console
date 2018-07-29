@@ -1,0 +1,119 @@
+<!-- <div>
+    <div class="form-check">
+        <label class="form-check-label">
+            <input type="checkbox" class="form-check-input" [checked]="IsGroupEnabled" (change)="IsGroupEnabled = !IsGroupEnabled">
+            Enable Group
+        </label>
+    </div>
+    <button class="btn btn-primary" (click)="fnSaveSettings()">Save Settings</button><br/><br/><br/>
+
+
+    <button *ngIf="IsConsoleUserExists" class="btn btn-primary" (click)="fnCreateConsoleUser()">Create Console User</button>
+
+</div> -->
+<alert></alert>
+<div class="col-sm-12">
+    <div class="col-sm-6">
+        <table class="setting-details">
+            <thead>
+                <tr>
+                    <th colspan="2" style="text-align:center">Setting Information</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td> Groups Enabled</td>
+                    <td><input type="checkbox" class="form-check-input" [(ngModel)]="settings.GroupEnabled"></td>
+                </tr>
+                <tr style="display:none">
+                    <td>Persistent notifications</td>
+                    <td><input type="checkbox" class="form-check-input" [(ngModel)]="settings.PersistentNotifications"></td>
+                </tr>
+                <tr style="display:none">
+                    <td>Escalating notifications</td>
+                    <td><input type="checkbox" class="form-check-input" [(ngModel)]="settings.EscalatingNotifications"></td>
+                </tr>
+                <tr>
+                    <td>Custom messages</td>
+                    <td><input type="checkbox" class="form-check-input" [(ngModel)]="settings.CustomMessageEnable"></td>
+                </tr>
+                <tr>
+                    <td>Maps enabled</td>
+                    <td><input type="checkbox" disabled class="form-check-input" [(ngModel)]="settings.MapsEnabled"></td>
+                </tr>
+                <tr>
+                    <td>Vibration time(seconds)</td>
+                    <td style="padding-bottom:3px">
+                        <select [(ngModel)]="settings.VibrateTime" style="width: 90px;">
+                                    <option value="1">1 Second</option>
+                                    <option value="2">2 Seconds</option>
+                                    <option value="3">3 Seconds</option>
+                                    <option value="4">4 Seconds</option>
+                                </select>
+                    </td>
+                </tr>
+                <tr style="display:none">
+                    <td>Allowed watch idle time (minutes)</td>
+                    <td>
+                        <select [(ngModel)]="settings.IdleTime" style="width: 90px;">
+                            <option value="10">10 min</option>
+                            <option value="15">15 min</option>
+                            <option value="20">20 min</option>
+                            <option value="30">30 min</option>
+                            <option value="60">1 hour</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align:right; padding-top:5px;">
+                        <button class="btn btn-outline-success" (click)="fnSaveSettingInfo()">Save Information</button> </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class=" col-sm-6 " style="display:none">
+        <div class="col-sm-12 ">
+            <div>
+                <div style="text-align:right ">
+                    <button class="btn btn-outline-success " (click)="fnAddNewWifi()">Add Wifi</button>
+                </div>
+                <app-p-table [pTableSetting]="wifiAccessPointTableBind " [pTableMasterData]="wifiAccessPointDetails " (customActivityOnRecord)="fnActivityOnRecord($event)"></app-p-table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="wifiModalDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    <span>{{IsEditWifi==true?'Edit':'Add'}} Wifi Access Point</span>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <div class="form-group row">
+                        <label for="inputPassword" class="control-label col-xs-3">WiFi Name</label>
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" id="inputPassword" placeholder="WiFi Name" [(ngModel)]="wifiName">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword" class="control-label col-xs-3">Wifi Password</label>
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" id="inputPassword" placeholder="Password" [(ngModel)]="wifiPassword">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-success" (click)="fnAddWifiDetails()">{{IsEditWifi==true?'Edit':'Add'}} Wifi</button>
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal"> Close </button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</div>

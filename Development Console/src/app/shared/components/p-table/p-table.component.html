@@ -1,0 +1,248 @@
+<div *ngIf="pTableSetting!=null" [ngClass]="{'reflow-modal': activeReflow}">
+    <div class="col-md-12 p-table-content" [ngClass]="{'reflow-content': activeReflow}">
+        <div class="panel panel-default">
+            <div class="p-table-header" *ngIf="pTableSetting.tableHeaderFooterVisibility==true ||pTableSetting.tableHeaderFooterVisibility==null">
+                <div class="row">
+                    <div class="col col-xs-6">
+                        <h3 class="panel-title">{{pTableSetting.tableName}}</h3>
+                    </div>
+                    <div class="col col-xs-6 text-right">
+                        <div>
+                            <div *ngIf="pTableSetting.enabledCustomReflow==true || pTableSetting.enabledReflow==true" class="">
+                                <button type="button" class="pull-right reflow-btn" (click)="fnReflowTable()" ripple-radius>
+                                <span class="glyphicon glyphicon-fullscreen reflow-icon" *ngIf="activeReflow==false && customReflowActive==false"></span>
+                                <span class="glyphicon glyphicon-resize-full reflow-icon" *ngIf="activeReflow || customReflowActive"></span>
+                             </button>
+                            </div>
+
+                            <div *ngIf="pTableSetting.enabledColumnSetting">
+                                <button type="button" class="pull-right btn-column-setting" popoverTitle="Column customization" ripple-radius> Columns  <span class="glyphicon glyphicon-cog" style="color:green"></span></button>
+                                <!-- <button type="button" class="pull-right btn-column-setting" [popover]="pTableColumnSelection" placement="bottom" popoverTitle="Column customization" ripple-radius> Columns  <span class="glyphicon glyphicon-cog" style="color:green"></span></button>
+                                <popover-content #pTableColumnSelection [closeOnClickOutside]="false" popoverPlacement="left" [animation]="true" style="left:-100px;" class="p-table-popover">
+                                    <ul class="nav nav-tabs" *ngIf="settingsTabs.length>1">
+                                        <li *ngFor="let tab of settingsTabs" (click)="selectTab(tab)" [class.active]="tab.active">
+                                            <a>{{tab.tabName}}</a>
+                                        </li>
+                                    </ul>
+
+                                    <div class="tab-content-1">
+                                        <div id="home" class="tab-pane fade in active" *ngIf="activeTabName=='columnShowHide'">
+                                            <div class="col-setting-title alert alert-success" role="alert">
+                                                <strong>Hide/Show Columns </strong>
+                                            </div>
+                                            <div class="row" style="margin-left: 5px;margin-right: 5px">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" #pTableColumnSearchVal placeholder="Search {{filterColumnTitle}}" (keyup)="fnPTableColumnCustomizationSearch(pTableColumnSearchVal.value)">
+                                                    <span class="input-group-btn">
+                                               <button type="submit" class="btn btn-default"> <span class="glyphicon glyphicon-search"></span>                                                    </button>
+                                                    </span>
+                                                </div>
+                                                <div class="filterd-data">
+                                                    <div>
+                                                        <div *ngFor="let columnDef of pTableColumnCustomizationList" [style.display]="columnDef?.alwaysVisible==true?'None':'block'">
+                                                            <label class="checkbox-inline"><input type="checkbox" value="" [(ngModel)]="columnDef.visible">{{columnDef.headerName}} </label><br/></div>
+                                                    </div>
+                                                </div>
+                                                <div class="footer-buttons pull-right">
+                                                    <button type="button" class="btn btn-default filter-button" (click)="fnApplyCustomCustomization();pTableColumnSelection.hide()">Ok</button>
+                                                    <button type="button" class="btn btn-default filter-button" (click)="pTableColumnSelection.hide()">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="menu1" class="tab-pane fade in active" *ngIf="activeTabName=='columnOrder' && pTableSetting.enabledReordering==true">
+                                            <div class="col-setting-title alert alert-success" role="alert">
+                                                <strong> Reorder Columns </strong>
+                                            </div>
+                                            <div class="row" style="margin-left: 5px;margin-right: 5px">
+                                                <div class="filterd-data" style="margin-left: 0px;">
+                                                    <ul class="ul-dragable">
+                                                        <div *ngFor="let columnDef of pTableColumnReorder" class="dragable-content" [makeDraggable]="columnDef" makeDroppable (dropped)="onDrop($event, columnDef)"
+                                                            [style.display]="columnDef?.visible==false && columnDef?.visible!=null ?'none':''">
+                                                            <li class="dragable">
+                                                                <span>{{columnDef.headerName}}</span>
+                                                            </li>
+                                                        </div>
+                                                    </ul>                                                  
+                                                </div>
+                                                <div class="footer-buttons pull-right">
+                                                    <button type="button" class="btn btn-default filter-button" (click)="fnApplyReorderColumn();pTableColumnSelection.hide()">Ok</button>
+                                                    <button type="button" class="btn btn-default filter-button" (click)="pTableColumnSelection.hide()">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </popover-content> -->
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row search-table" *ngIf="pTableSetting.enabledSearch">
+                <div class="col-sm-7 col-md-8 col-xs-9">
+                    <div class="pull-left">
+                        <div class="btn-group" *ngIf="pTableSetting.enabledDataLength">
+                            <button class="btn p-table-data-length">Show {{pageSize}}  records<span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li *ngFor="let rowlimit of rowLimitArray"><a id="action-1" (click)="fnChangePTableRowLength(rowlimit)">{{rowlimit}} records</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-5 col-md-4 col-xs-3 pull-right">
+                    <div class="form-group has-feedback">
+                        <input type="text" class="form-control p-table-search" id="inputValidation" #search placeholder="Search" [(ngModel)]="globalSearchValue" (keyup)="fnFilterPTable(search.value)" />
+                        <span class="glyphicon glyphicon-search form-control-feedback" style="z-index: 1"></span>
+                    </div>
+                </div>
+            </div>
+            <div style="width:100%" (scroll)="onScroll($event)" [style.overflow]="pTableSetting.pTableStyle?.tableOverflow==true?'auto':'hidden'" [ngClass]="{'p-table-overflow-x':pTableSetting.pTableStyle?.tableOverflowX,'p-table-overflow-y':pTableSetting.pTableStyle?.tableOverflowY}"
+                [style.max-height]="pTableSetting.pTableStyle?.overflowContentHeight">
+                <div class="p-table-scroll-body" [id]="'p-table-scroll-'+pTableSetting.tableID" [style.width]="pTableSetting.pTableStyle?.overflowContentWidth">
+                    <div class="panel-body p-table-body">
+                        <table class="p-table table table-striped table-bordered table-list" [id]="pTableSetting.tableID">
+                            <thead>
+                                <tr>
+                                    <th *ngIf="pTableSetting.enabledSerialNo" class="p-table-serial" width="2%">
+                                        <span *ngIf="pTableSetting.enabledColumnResize" class="p-table-column-resizer" (mousedown)="fnResizeColumn($event)"></span> SL
+                                    </th>
+                                    <th *ngIf="pTableSetting.enabledCheckbox" class="p-table-row-checkbox" width="2%"><input type="checkbox" [ngClass]="'p-table-select-all select-all-'+pTableSetting.tableID" (click)="fnOperationOnCheckBox($event,pTableSetting.tableID)">
+                                        <span *ngIf="pTableSetting.enabledColumnResize" class="p-table-column-resizer" (mousedown)="fnResizeColumn($event)"></span> {{pTableSetting?.checkboxColumnHeader}}
+                                    </th>
+                                    <th *ngIf="pTableSetting.enabledRadioBtn" class="p-table-row-radio" width="2%">
+                                        <span *ngIf="pTableSetting.enabledColumnResize" class="p-table-column-resizer" (mousedown)="fnResizeColumn($event)"></span> {{pTableSetting?.radioBtnColumnHeader}}
+                                    </th>
+                                    <th *ngFor="let head of pTableSetting.tableColDef" class="{{head.className}} {{head.internalName}}" [ngClass]="{'sorting':head.sort,'sorting-active':head.sort}" [style.display]="head?.visible==false && head?.visible!=null ?'none':''" [ngStyle]="{'width': head.width}"
+                                        (click)="fnColumnSorting(head.internalName,pTableSetting.tableID,head.sort)">
+                                        <span *ngIf="pTableSetting.enabledColumnFilter && (head.applyColFilter==null ||head.applyColFilter=='Apply')" class="glyphicon glyphicon-filter column-filter-active pull-left" style="cursor: pointer" id="filter-icon-{{head.internalName}}" (click)="fnIndividualColumnFilterContext(head,$event)"></span>
+                                        <!--<span class="glyphicon glyphicon-filter column-filter-active pull-left" style="cursor: pointer" id="filter-icon-{{head.internalName}}" (click)="fnIndividualColumnFilterContext(head.internalName,$event)"></span>-->
+                                        <span *ngIf="pTableSetting.enabledColumnResize" class="p-table-column-resizer" (mousedown)="fnResizeColumn($event)"></span>
+                                        <span *ngIf="head.sort" class="sort-icon pull-right"> </span>
+                                        <!-- <div [ngSwitch]="head.type">   -->
+                                        <div *ngIf="head.type==''||head.type=='text'||head.type=='hyperlink'||head.type=='checkbox' || head.type==null">{{head.headerName}}</div>
+                                        <div *ngIf="head.type=='checkbox-all'"><input type="checkbox" (click)="fnClickPTableCell($event,pTableSetting.enabledCellClick,'p-table-select-all',head.onClick,head)" />{{head.headerName}}</div>
+                                        <div *ngIf="head.type=='checkbox-switch'|| head.type=='battery-level' || head.type=='online-offline' || head.type=='button'">{{head.headerName}}</div>
+                                        <!-- </div> -->
+                                    </th>
+                                    <th *ngIf="pTableSetting.enabledEditBtn">
+                                        <span *ngIf="pTableSetting.enabledColumnResize" class="p-table-column-resizer" (mousedown)="fnResizeColumn($event)"></span>
+                                        <em class="fa fa-cog"></em>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let body of pagedItems, let counter=index" [ngClass]="'row-'+body[pTableSetting.tableRowIDInternalName]" class="individual-ptable-record-{{body[pTableSetting.columnNameSetAsClass]}}">
+                                    <td *ngIf="pTableSetting.enabledSerialNo">{{startPageNo+counter}}</td>
+                                    <td *ngIf="pTableSetting.enabledCheckbox" class="p-table-checkbox"><input type="checkbox" [ngClass]="'checkbox-'+pTableSetting.tableID" attr.data-sectionvalue="{{body[pTableSetting.tableRowIDInternalName]}}" (click)="fnIndividualCheckboxAction($event,body)"></td>
+                                    <td *ngIf="pTableSetting.enabledRadioBtn" class="p-table-radio"><input type="radio" [ngClass]="'radio-'+pTableSetting.tableID" name="radio-{{pTableSetting.tableID}}" attr.data-sectionvalue="{{body[pTableSetting.tableRowIDInternalName]}}" (click)="fnIndividualRadioAction($event,body)"></td>
+                                    <td class="" *ngFor="let dispCol of pTableSetting.tableColDef" [style.display]="dispCol?.visible==false && dispCol?.visible!=null ?'none':''" [ngClass]="dispCol.className">
+                                        <div *ngIf="dispCol.type=='checkbox'|| dispCol.type=='checkbox-all'">
+                                            <input type="checkbox" [checked]="body[dispCol.internalName]=='true' || body[dispCol.internalName]==true" (click)="fnClickPTableCell($event,pTableSetting.enabledCellClick,dispCol.internalName,dispCol.onClick,body)" />
+                                        </div>
+                                        <div *ngIf="dispCol.type=='checkbox-switch'" style="text-align:center">
+                                            <label class="switch">
+                                                <input [disabled]="dispCol.onClick!='Yes'" onclick="" type="checkbox" [checked]="body[dispCol.internalName]=='true' || body[dispCol.internalName]==true" (click)="fnClickPTableCell($event,pTableSetting.enabledCellClick,dispCol.internalName,dispCol.onClick,body); $event.preventDefault();">
+                                                <span class="slider round"></span>
+                                             </label>
+                                        </div>
+                                        <div *ngIf="dispCol.type=='battery-level'" style="text-align:center">
+                                            <i class="fa fa-battery-{{ this.Math.round(+body[dispCol.internalName]/25)}}" style="font-size:35px;" [style.color]="this.Math.round(+body[dispCol.internalName])<10?'red':this.Math.round(+body[dispCol.internalName])<30?'#a7a776':'green'"></i>
+                                            <span> {{this.Math.round(+body[dispCol.internalName])}}% </span>
+                                        </div>
+                                        <div *ngIf="dispCol.type=='online-offline'" style="text-align:center">
+                                            <a class="online-offline" (click)="fnClickPTableCell($event,pTableSetting.enabledCellClick,dispCol.internalName,dispCol.onClick,body)"><i class="fa fa-check-circle" [ngStyle]="{'font-size':'30px','color':body[dispCol.internalName]==true||body[dispCol.internalName]=='true'?'green':'#bababa'}" ></i></a></div>
+                                        <div *ngIf="dispCol.type=='hyperlink'"><a class="p-table-hyperlink" (click)="fnClickPTableCell($event,pTableSetting.enabledCellClick,dispCol.internalName,dispCol.onClick,body)">{{body[dispCol.internalName]}}</a></div>
+                                        <div *ngIf="dispCol.type=='button'">
+                                            <button class="btn btn-outline-success p-table-custom-button" (click)="fnClickPTableCell($event,pTableSetting.enabledCellClick,dispCol.internalName,dispCol.onClick,body)">
+                                                <i class="fa fa-file-text-o"></i> {{body[dispCol.internalName]}}
+                                            </button>
+                                        </div>
+                                        <div *ngIf="dispCol.type=='' || dispCol.type==null">{{body[dispCol.internalName]}}</div>
+                                    </td>
+                                    <td align="left" width="10%" *ngIf="pTableSetting.enabledEditBtn">
+                                        <a class="p-table-edit-icon" (click)="fnActivityOnRecord('edit-item',body)"><em class="fa fa-pencil" ></em></a>
+                                        <a class=" p-table-delete-icon" (click)="fnActivityOnRecord('delete-item',body)"><em class="fa fa-trash" ></em></a>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="pTableDatalength<1">
+                                    <td [colSpan]="totalColspan" align="center"><b>No Record Found.</b></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div *ngIf="pTableSetting.tableHeaderFooterVisibility==true ||pTableSetting.tableHeaderFooterVisibility==null">
+                        <div class="p-table-footer" *ngIf="pTableDatalength>0">
+                            <div class="row">
+                                <div class="col col-xs-4">
+                                    <div [innerHTML]="showingPageDetails"></div>
+                                </div>
+                                <div class="col col-xs-8">
+                                    <!-- pager -->
+                                    <ul *ngIf="pager.pages && pager.pages.length && enabledPagination" class="pagination hidden-xs pull-right">
+                                        <li [ngClass]="{disabled:pager.currentPage === 1}">
+                                            <a (click)="setPage(1)"><span class="glyphicon glyphicon-chevron-left"></span><span class="glyphicon glyphicon-chevron-left p-table-aro-first"></span></a>
+                                        </li>
+                                        <li [ngClass]="{disabled:pager.currentPage === 1}" [attr.disabled]="pager.currentPage == 1 ? true : null">
+                                            <a (click)="setPage(pager.currentPage - 1)"><span class="glyphicon glyphicon-chevron-left p-table-aro-prev"></span></a>
+                                        </li>
+                                        <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                                            <a (click)="setPage(page)">{{page}}</a>
+                                        </li>
+                                        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                            <a (click)="setPage(pager.currentPage + 1)"><span class="glyphicon glyphicon-chevron-right p-table-aro-next"></span></a>
+                                        </li>
+                                        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                            <a (click)="setPage(pager.totalPages)"><span class="glyphicon glyphicon-chevron-right p-table-aro-last"></span><span class="glyphicon glyphicon-chevron-right"></span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<app-p-modal [modalSettingOption]="pModalSetting"> </app-p-modal>-->
+
+<div [id]="pTableSetting.tableID+'-fitlerInfo'" class="p-table-custom-column-filter">
+    <div class="arrow_box">
+        <div class="p-table-column-filter-title">
+            <div class="d-flex justify-content-between">
+                <div style="width: 87%;float: left">
+                    <span><b>Filter :</b> {{filterColumnTitle}}</span>
+                </div>
+                <div style="width: 13%;float: right">
+                    <span (click)="clearFilterFromFilterPopup()" style="cursor: pointer"> 
+                    <span class="glyphicon glyphicon-filter p-table-custom-filter-icon" [id]="'filter-remove-'+filterCustomColumnName" [style.color]="popupFilterColor"></span>
+                    <span class="glyphicon glyphicon-remove filter-popup-remove-icon"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-left: 5px;margin-right: 5px;padding-right: 4px;">
+            <div class="input-group col-sm-12">
+                <input type="text" class="form-control" #columnSearchVal placeholder="Search {{filterColumnTitle}}" [(ngModel)]="columnSearchValue" (keyup)="fnFilterPTableColumn(columnSearchVal.value)">
+                <span class="input-group-btn">
+                <button type="submit" class="btn btn-default"> 
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+                </span>
+            </div>
+            <div class="filterd-data">
+                <div>
+                    <label class="checkbox-inline"><input type="checkbox" [checked]="filterItemsCheckedAll" value="" (click)="fnCustomFilterSelectAll($event)">Select All </label>
+                    <div *ngFor="let uniqueRecord of customFilterUniqueArray"> <label class="checkbox-inline"><input type="checkbox" value="" [(ngModel)]="uniqueRecord.checked">{{uniqueRecord.data}} </label><br/></div>
+                </div>
+            </div>
+            <div class="footer-buttons pull-right p-table-column-filter-footer">
+                <button type="button" class="btn btn-default filter-button" (click)="fnApplyCustomFilter()">Ok</button>
+                <button type="button" class="btn btn-default filter-button" (click)="fnCloseCustomFilter()">Cancel</button>
+            </div>
+
+        </div>
+    </div>
+</div>

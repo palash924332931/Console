@@ -1,0 +1,48 @@
+.no-margin-padding {
+    margin: 0px;
+    padding: 0px;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+}
+
+.active-wearbols-content-left {
+    border-right: thick double green;
+    min-height: 600px!important;
+}
+
+.user-content-right {
+    border-left: thick double #ff0000;
+    min-height: 600px!important;
+}
+
+.user-list-event {
+    background-color: #eee;
+}
+
+.user-list-odd {
+    background-color: aliceblue;
+}
+
+.active-user {
+    background-color: #b1d8f3!important;
+    font-weight: bold;
+    color: black;
+}
+
+.active-user-info-list {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.nav>li>a:hover {
+    background-color: #b1d8f3!important;
+    font-weight: bold;
+    color: black;
+}
+
+.nav>li>a input[type=checkbox] {
+    background-color: #b1d8f3!important;
+}

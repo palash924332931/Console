@@ -1,0 +1,73 @@
+<div *ngIf="message?.type=='confirm'" class="modal alert-modal" tabindex="-1" role="dialog" style="display:block!important">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div *ngIf="message?.type == 'confirm'" class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="text-center"><span [innerHTML]="message.text"></span></h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="pull-right">
+                            <a (click)="message.siFn()">
+                                <button class="btn btn-outline-primary" style="padding-left: 17px;padding-right: 17px;">Yes</button>
+                            </a>
+                            <a (click)="message.noFn()">
+                                <button class="btn btn-outline-primary">Cancel</button>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div *ngIf="message?.type=='alert'" class="modal alert-modal" tabindex="-1" role="dialog" style="display:block!important">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="text-center"><span [innerHTML]="message.text"></span></h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="pull-right">
+                            <a (click)="message.noFn()">
+                                <button class="btn btn-outline-primary" style="padding-left: 18px;padding-right: 18px;">OK</button>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="message?.type=='alert-terminated'" class="modal alert-modal" tabindex="-1" role="dialog" style="display:block!important">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="text-center">{{message.text}}</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- <div class="col-md-12">
+                        <p class="pull-right">
+                            <a (click)="message.noFn()">
+                                <button class="btn btn-outline-primary">OK</button>
+                            </a>
+                        </p>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

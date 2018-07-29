@@ -1,0 +1,178 @@
+<div class="col-sm-12 home-tab-content">
+    <alert></alert>
+    <div class="col-sm-9 user-content">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <ul class="nav nav-tabs">
+                    <li *ngFor="let tab of homeTabs" [ngClass]="{'active': selectedTab==tab.tabName}"><a (click)="fnSelectTab(tab.tabName)">{{tab.tabName}}</a></li>
+                </ul>
+            </div>
+            <div class="panel-body">
+                <div *ngIf="selectedTab == groupTab">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon">  <label for="GroupName">Group Name</label></span>
+                                    <input type="text" class="form-control" name="GroupName" id="GroupName" [(ngModel)]="NewGroup.name" placeholder="Enter Group Name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon">  
+                                        <label for="GroupDescription">Description</label>
+                                    </span>
+                                    <input type="email" class="form-control" id="GroupDescription" name="GroupDescription" [(ngModel)]="NewGroup.description" placeholder="Enter Description (optional)">
+                                </div>
+                            </div>
+
+                            <input type="button" name="submit" id="CreateGroup" value="Create Group " (click)="fnCreateGroup()" [disabled]="NewGroup.name === ''" class="btn btn-info pull-right">
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <app-p-table [pTableSetting]="bindGroupsTable" [pTableMasterData]="groupList" (customReflowFn)="fnCustomReflowSetting($event)" (customActivityOnRecord)="fnActivityGroupList($event)"></app-p-table>
+                    </div>
+                </div>
+                <div *ngIf="selectedTab == userTab">
+                    <div class="row">
+                        <form class="col-lg-6" [formGroup]="userForm" (ngSubmit)="fnCreateUser(userForm.value)" autocomplete="off">
+                            <div class="form-group" [ngClass]="{'has-warning': fnIsUserNameBiggerThanRecommendedLength(false), 'has-error': errorMessage != ''}">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <label for="userName">User Name</label>
+                                    </span>
+                                    <input type="text" class="form-control" id="userName" formControlName="userName" placeholder="Enter Name" (ngModelChange)="fnOnUserNameChange($event)" autofocus />
+                                </div>
+                                <div class="form-text text-muted" [style.display]="fnHasUserNameMessage(false) ? '' : 'none'">
+                                    {{fnGetUserNameMessage(false)}}
+                                </div>
+                            </div>
+                            <div class="form-group" *ngIf="groupEnabled">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <label for="userGroup">Group</label>
+                                    </span>
+                                    <div class="dropdown group-dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" id="selectUserGroup" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                            <span class="text-muted" *ngIf="selectedGroup == null">Select a group</span>
+                                            <span>{{selectedGroup?.GroupName}}</span>
+                                        <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="selectUserGroup">
+                                            <li *ngFor="let group of groupList" (click)="fnSelectUserGroup(group)"><a>{{group.GroupName}}</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon">  <label for="fullName">Full Name</label></span>
+                                    <input type="text" class="form-control" id="fullName" formControlName="fullName" placeholder="Enter Full Name (optional)">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon">  <label for="Comment">Comment</label></span>
+                                    <input type="text" class="form-control" id="comment" formControlName="comment" placeholder="Enter Comment (optional)">
+                                </div>
+                            </div>
+                            <input type="submit" id="createUser" value="Create User" [disabled]="!fnCanCreateUser()" class="btn btn-info pull-right">
+                        </form>
+                    </div>
+                    <div class="row">
+                        <app-p-table [pTableSetting]="bindUserTable" [pTableMasterData]="userList" (customReflowFn)="fnCustomReflowSetting($event)" (customActivityOnRecord)="fnActivityUserList($event)"></app-p-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <app-live-feed></app-live-feed>
+    </div>
+    <div class="modal fade" id="modalDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        <span *ngIf="selectedTab == userTab">Edit User</span>
+                        <span *ngIf="selectedTab == groupTab">Edit Group</span>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="col-sm-12" style="padding-bottom:20px" *ngIf="selectedTab == userTab">
+                        <div class="form-group" [ngClass]="{'has-warning': fnIsUserNameBiggerThanRecommendedLength(true), 'has-error': editErrorMessage !== ''}">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <label for="editUserName">User Name</label>
+                                </span>
+                                <input type="text" class="form-control" id="editUserName" [(ngModel)]="editUserName" placeholder="Enter Name" (change)="fnOnEditUserNameChange()" autofocus autocomplete="off" />
+                            </div>
+                            <div class="form-text text-muted" [style.display]="fnHasUserNameMessage(true) ? '' : 'none'">
+                                {{fnGetUserNameMessage(true)}}
+                            </div>
+                        </div>
+                        <div class="form-group" *ngIf="groupEnabled">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <label for="editUserGroup">Group</label>
+                                </span>
+                                <div class="dropdown group-dropdown">
+                                    <button class="btn btn-default dropdown-toggle" type="button" id="editUserGroup" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        <span class="text-muted" *ngIf="editUserGroup == null">Select a group</span>
+                                        <span>{{editUserGroup?.GroupName}}</span>
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu from-group" aria-labelledby="selectUserGroup">
+                                        <li *ngFor="let group of groupList" (click)="fnSelectEditUserGroup(group)">
+                                            <a>{{group.GroupName}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">  <label for="fullName">Full Name</label></span>
+                                <input type="text" class="form-control" id="fullName" [(ngModel)]="editFullName" placeholder="Enter Full Name (optional)" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">  <label for="Comment">Comment</label></span>
+                                <input type="text" class="form-control" id="comment" [(ngModel)]="editComment" placeholder="Enter Comment (optional)" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" style="padding-bottom:20px" *ngIf="selectedTab == groupTab">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">  
+                                    <label for="GroupName">Group Name</label>
+                                </span>
+                                <input type="text" class="form-control" id="editGroupName" [(ngModel)]="editGroupName" placeholder="Enter Group Name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">  
+                                    <label for="GroupDescription">Description</label>
+                                </span>
+                                <input type="email" class="form-control" id="GroupDescription" name="GroupDescription" [(ngModel)]="editGroupDescription" placeholder="Enter Description (optional)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"> Close </button>
+                    <button type="button" class="btn btn-primary" (click)="fnUpdateUser()" [disabled]="!fnCanUpdateUser()" *ngIf="selectedTab == userTab">Update User</button>
+                    <button type="button" class="btn btn-primary" (click)="fnUpdateGroup()" *ngIf="selectedTab == groupTab" [disabled]="editGroupName == ''">Update Group</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+</div>

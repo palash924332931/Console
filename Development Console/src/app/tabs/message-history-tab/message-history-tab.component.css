@@ -1,0 +1,124 @@
+.container {
+    max-width: 960px;
+}
+
+.wearbols-groups ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.wearbols-groups .nav li {
+    border-bottom: 1px solid #eee;
+}
+
+.wearbols-groups .nav li a {
+    font-size: 14px;
+}
+
+#accordionMenu {
+    max-width: 300px;
+}
+
+.wearbols-groups .panel-body {
+    padding: 0;
+}
+
+.panel-group .panel+.panel {
+    margin-top: 0;
+    border-top: 0;
+}
+
+.panel-group .panel {
+    border-radius: 0;
+}
+
+.wearbols-groups.panel-default>.panel-heading {
+    color: #333;
+    background-color: #fff;
+    border-color: #e4e5e7;
+    padding: 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.wearbols-groups.panel-default>.panel-heading a {
+    display: block;
+    padding: 8px 14px;
+    text-decoration: none;
+}
+
+.wearbols-groups.panel-default>.panel-heading a:after {
+    content: "";
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    float: right;
+    transition: transform .25s linear;
+    -webkit-transition: -webkit-transform .25s linear;
+}
+
+.wearbols-groups.panel-default>.panel-heading a[aria-expanded="true"] {
+    background-color: #eee;
+}
+
+.wearbols-groups.panel-default>.panel-heading a[aria-expanded="true"]:after {
+    content: "\e113";
+}
+
+.wearbols-groups.panel-default>.panel-heading a[aria-expanded="false"]:after {
+    content: "\e114";
+}
+
+.padding-zero {
+    padding: 0px;
+}
+
+.group-header {
+    height: 34px;
+    padding: 5px, 10px;
+}
+
+.nav>li>a {
+    position: relative;
+    display: block;
+    padding: 5px 15px;
+}
+
+.active-wearbols-title {
+    background-color: #E8F5E9!important;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    padding: 8px;
+    text-align: center;
+    max-width: 300px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.mgs-left-side {
+    padding-top: 15px;
+}
+
+.group-header {
+    background-color: #d9eff2;
+    margin-bottom: 2px;
+    padding-left: 3px;
+    margin-top: 2px;
+    display: table;
+    width: 100%;
+    height: 30px;
+    font-weight: bold;
+}
+
+.close-user-list {
+    display: none;
+}

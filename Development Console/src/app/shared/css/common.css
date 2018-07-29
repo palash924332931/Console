@@ -1,0 +1,67 @@
+.delete-icon {
+    color: red;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.save-icon {
+    color: green;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.btn-outline-success {
+    color: #5cb85c;
+    background-image: none;
+    background-color: transparent;
+    border-color: #5cb85c;
+}
+
+.btn-outline-success:hover {
+    color: white;
+    background-image: none;
+    background-color: #5cb85c;
+    border-color: #5cb85c;
+}
+
+.btn-outline-danger {
+    color: #d9534f;
+    background-image: none;
+    background-color: transparent;
+    border-color: #d9534f;
+}
+
+.btn-outline-danger:hover {
+    color: white;
+    background-image: none;
+    background-color: #d9534f;
+    border-color: #d9534f;
+}
+
+.btn-outline-primary {
+    color: #0275d8;
+    background-image: none;
+    background-color: transparent;
+    border-color: #0275d8;
+}
+
+.btn-outline-primary:hover {
+    color: white;
+    background-image: none;
+    background-color: #0275d8;
+    border-color: #0275d8;
+}
+
+.btn-outline-info {
+    color: #5bc0de;
+    background-image: none;
+    background-color: transparent;
+    border-color: #5bc0de;
+}
+
+.btn-outline-info:hover {
+    color: white;
+    background-image: none;
+    background-color: #5bc0de;
+    border-color: #5bc0de;
+}

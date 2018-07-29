@@ -1,0 +1,6 @@
+<div class="col-sm-12" style="text-align:center">
+    <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
+        <agm-marker class="custom-merker" *ngFor="let marker of currentWatchList" [latitude]="marker.Latitude" [longitude]="marker.Langitude" [label]="marker.UserName" [title]="marker.UserName"></agm-marker>
+    </agm-map>
+    <!-- <img src="/assets/images/gmap.jpg" class="img-rounded" alt="Cinque Terre" style="height: 406px;width: 600px;"> -->
+</div>

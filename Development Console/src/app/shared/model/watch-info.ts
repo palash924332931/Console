@@ -1,0 +1,26 @@
+export class WatchList{
+    $key:string;
+    key:string;
+    WearableKey:string;
+    SerialNum:string;
+    IMEI:string;
+    GPSPosition:string;
+    BatteryLevel:string;
+    UserKey:string;
+    GroupKey:string;
+    CompanyKey:string;
+    DeploymentKey:string;
+    OnlineStatus:string;
+    IsActive:boolean;
+    UserName:string;
+    GroupName:string;
+    NetworkType:string;
+    GPSLatitude:string;
+    GPSLongitude:string;
+    GPSAccuracy:string;
+    CellAccessPoint:string;
+    WiFiSSID:string;
+    LastSeen:string;
+    Comments:string; 
+    Details?:string;   
+}

@@ -1,0 +1,58 @@
+<div class="col-sm-12">
+    <div class="panel panel-info">
+        <div class="panel-heading">CONSOLE MESSAGE FEED</div>
+        <div style="padding-left:10px; background-color: #BBDEFB;">
+            <span style="padding-left:5px"> <input type="radio" name="checked-live-message" checked="checked"  (click)="fnCheckRadio($event.target.checked,'ReceivedMessage')" value="Received"> Received</span>
+            <span style="padding-left:5px"> <input type="radio" name="checked-live-message"   value="Sent" (click)="fnCheckRadio($event.target.checked,'SentMessage')" > Sent</span>
+            <span style="padding-left:5px"> <input type="radio" name="checked-live-message"   value="Either" (click)="fnCheckRadio($event.target.checked,'EitherMessage')" > Either</span>
+        </div>
+        <div class="panel-body  live-message-history">
+            <ul class="list-group">
+                <li *ngFor="let mgs of consoleUserViewableMessage" class="list-group-item" (click)="fnShowDetailsOfMessage(mgs)" [ngClass]="{'list-group-item-success': mgs.Status=='Accepted', 'list-group-item-danger': mgs.Status=='Rejected','list-group-item-warning': mgs.Status=='Unread'}">
+                    <div>
+                        <div>{{mgs.MsgText}} </div>
+                        <div style="padding-top:7px">
+                            <div style="width:60%;float:left;font-size:12px;"><i *ngIf="mgs.ReceivedByKey==this.consoleUser.key">From {{mgs.SentByName}} </i> <i *ngIf="mgs.ReceivedByKey!=this.consoleUser.key">Sent to {{mgs.ReceivedByName}} </i></div>
+                            <div style="width:40%;float:right;font-size:11px;">
+                                <div class="pull-right"><i>{{mgs.SentDate}}</i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="messageActivity" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        <span>CONSOLE MESSAGE</span>
+                    </h4>
+                </div>
+                <div class="modal-body1">
+                    <div class="col-sm-12" style="padding-bottom:20px">
+                        <br/>
+                        <p>{{selectedMessage}}</p>
+                    </div>
+                    <div style="padding-left:25px;" *ngIf="(selectedMessageStatus=='Unread' || selectedMessageStatus=='Read') && selectedMessageDetails?.ReceivedByName==consoleUser.UserName">
+                        <span> Accept: <i (click)="fnChangeStatus('Accepted')" class="fa fa-check" aria-hidden="true" style="color:green; font-size:30px;cursor:pointer"></i></span>
+                        <span> Reject: <i (click)="fnChangeStatus('Rejected')" class="fa fa-times" aria-hidden="true" style="color:red;font-size:30px;cursor:pointer"></i></span>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"> Close </button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+</div>

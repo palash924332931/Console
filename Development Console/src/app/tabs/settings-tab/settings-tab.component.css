@@ -1,0 +1,18 @@
+.setting-details thead tr {
+    background-color: #E8F5E9!important;
+    padding: 3px;
+    text-align: center;
+}
+
+.setting-details tbody tr:nth-child(odd) {
+    background-color: #eee;
+}
+
+.setting-details tbody tr:nth-child(even) {
+    background-color: #fff;
+}
+
+.setting-details td,
+.setting-details th {
+    padding: 4px;
+}

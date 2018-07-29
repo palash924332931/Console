@@ -1,0 +1,120 @@
+<div class="col-sm-12">
+    <alert></alert>
+    <div class="col-sm-12">
+        <div style="padding-left:10px; background-color: #BBDEFB;font-weight: bold;">
+            <span style="padding-left:5px"> <input type="radio" name="checked-live-message" checked="checked"  (click)="fnCheckRadio($event.target.checked,'OnlineOnly')" value="Received"> Online only</span>
+            <span style="padding-left:5px"> <input type="radio" name="checked-live-message"   value="Sent" (click)="fnCheckRadio($event.target.checked,'OfflineOnly')" > Offline only</span>
+            <!-- <span style="padding-left:5px"> <input type="radio" name="checked-live-message"   value="Either" (click)="fnCheckRadio($event.target.checked,'Either')" > Either</span> -->
+        </div>
+    </div>
+    <app-p-table [pTableSetting]="watchListTableBind" [pTableMasterData]="activeWeabolsUserList" (cellClickCallbackFn)="fnTableCallback($event)"></app-p-table>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="watchDetailsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    <span>Details information of {{selectedWatchInfor?.UserName}}</span>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-sm-12" style="padding-bottom:20px">
+                    <table class="table table-striped">
+                        <tr>
+                            <td><b>Name:</b></td>
+                            <td>{{selectedWatchInfor?.UserName}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>MAC Address:</b></td>
+                            <td>{{selectedWatchInfor?.watchKey}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>WiFi SSID:</b></td>
+                            <td>{{selectedWatchInfor?.WiFiSSID}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>WiFi ID Address:</b></td>
+                            <td>{{selectedWatchInfor?.WiFiipAddress}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>WiFi Signal Strength:</b></td>
+                            <td>{{selectedWatchInfor?.WiFisignalStrength}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Carrier Name:</b></td>
+                            <td>{{selectedWatchInfor?.CarrierName}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Cellular Signal Strength:</b></td>
+                            <td>{{selectedWatchInfor?.CellularSignalStrength}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Owner Name:</b></td>
+                            <td>{{selectedWatchInfor?.OwnerName}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Owner Key:</b></td>
+                            <td>{{selectedWatchInfor?.OwnerKey}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Deployment Name:</b></td>
+                            <td>{{selectedWatchInfor?.DeploymentName}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Deployment Key:</b></td>
+                            <td>{{selectedWatchInfor?.DeploymentKey}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>User Key:</b></td>
+                            <td>{{selectedWatchInfor?.UserKey}}</td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Battery Level:</b></td>
+                            <td>{{selectedWatchInfor?.BatteryLevel}}%</td>
+                        </tr>
+                        <tr>
+                            <td><b>Battery Charging:</b></td>
+                            <td>{{selectedWatchInfor?.BatteryIsCharging}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Battery Health:</b></td>
+                            <td>{{selectedWatchInfor?.BatteryHealth}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>GPS Longitude:</b></td>
+                            <td>{{selectedWatchInfor?.GPSLongitude}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>GPS Latitude:</b></td>
+                            <td>{{selectedWatchInfor?.GPSLatitude}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Tizen Version:</b></td>
+                            <td>{{selectedWatchInfor?.TizenVersion}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Knox Version:</b></td>
+                            <td>{{selectedWatchInfor?.KnoxVersion}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Wearbols Version:</b></td>
+                            <td>{{selectedWatchInfor?.WearbolsVersion}}</td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"> Close </button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

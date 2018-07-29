@@ -1,0 +1,20 @@
+.message-section {
+    height: 400px;
+    overflow-y: auto;
+    overflow-x: none;
+    background-color: #eaf5fb;
+    margin-bottom: 5px;
+    padding: 5px;
+}
+
+.message-section .form-control {
+    font-size: 12px!important;
+}
+
+.message-section .table tr>td {
+    padding: 2px!important;
+}
+
+.top-message-section {
+    padding-top: 15px;
+}
